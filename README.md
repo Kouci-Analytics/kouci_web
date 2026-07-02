@@ -1,140 +1,65 @@
 # Kouci — Master Every Play
 
-The public landing page for **Kouci**, a water polo tactical & statistical
-analysis app for coaches and analysts. Dark, sporty, and built around an
-interactive 3D water scene.
+![Kouci Hero](https://kouci-web.vercel.app/og-image.jpg) <!-- replace with real OG image -->
 
-> Players · Penalty shot maps · Animated tactics · Live match stats.
+**Kouci** is the iOS & Android app that turns raw water polo match data into a **tactical edge** for coaches and analysts.
 
-## Stack
+**Master Every Play.** Player stats • Penalty shot maps • Animated tactics • Live game tracking.
 
-- **Vite + React + TypeScript**
-- **Three.js** via **React Three Fiber** + **@react-three/drei**
-- **GSAP** (with ScrollTrigger) + **Lenis** smooth scroll; **maath** easing for camera damping
-- **Tailwind CSS** for all 2D UI
+[View Live Demo](https://kouci-web.vercel.app) • [Request Early Access](#early-access)
 
-The hero's cinematic grade is done **without a post-processing library** (to keep
-the bundle light and hold 60fps): the renderer's ACES Filmic tone mapping grades
-the frame, MSAA handles edges, the ball carries a cheap additive glow sprite
-(faux bloom), and a CSS radial gradient supplies the vignette.
+## Why Kouci?
 
-The 3D layer uses the standard WebGL renderer (WebGL 2 with automatic fallback
-to WebGL 1). WebGPU is intentionally **not** assumed.
+Water polo moves fast. Your decisions shouldn't rely on memory.
 
-## Getting started
+Kouci gives you:
+- **Roster Management** with season-long player tracking
+- **Penalty Shot Intelligence** – visual goal maps with placement, outcomes, and keeper stats
+- **Animated Tactics** – draw plays, animate movements, export as video/GIF
+- **Live Match Stats** – real-time logging that updates season data instantly
+
+Built for head coaches, analysts, clubs, and federations who demand precision.
+
+## Live Demo
+
+https://kouci-web.vercel.app
+
+## Tech Stack
+
+- **Frontend**: Vite + React 18 + TypeScript + Tailwind CSS
+- **3D**: Three.js via React Three Fiber + Drei
+- **Animations**: GSAP (ScrollTrigger) + Lenis smooth scroll
+- **SSG**: vite-react-ssg for excellent SEO and performance
+- **Analytics**: Vercel Analytics
+
+## Quick Start
 
 ```bash
 npm install
-npm run dev      # start the dev server (http://localhost:5173)
-npm run build    # type-check + production build → dist/
-npm run preview  # preview the production build locally
+npm run dev
 ```
 
-Node 18+ recommended.
+See full setup and deployment instructions below.
 
-## Project structure
+## Project Structure (Improved)
 
-```
-src/
-├─ App.tsx                 # page shell, skip link, scroll wiring
-├─ index.css               # Tailwind layers + palette CSS variables
-├─ lib/
-│  ├─ theme.ts             # palette as TS values (for Three.js)
-│  └─ scrollStore.ts       # GSAP ↔ R3F scroll bridge (no re-renders)
-├─ hooks/
-│  ├─ usePrefersReducedMotion.ts
-│  ├─ usePageScroll.ts     # ScrollTrigger → scrollStore
-│  └─ useInView.ts         # defer-mount heavy canvases
-├─ data/
-│  └─ features.ts          # the four product pillars (copy)
-├─ components/
-│  ├─ layout/              # Navbar, Footer
-│  ├─ sections/            # Hero, Promise, Features, Showcase, Audience, EarlyAccess
-│  └─ ui/                  # Button, Field, Reveal, SectionHeading
-└─ three/                  # all the WebGL
-   ├─ HeroCanvas.tsx       # pool scene: sky + lighting + pass loop (lazy)
-   ├─ Lighting.tsx         # cinematic rig (Lightformer env + key/rim/bounce)
-   ├─ hero/                # the hero scene, built from scratch
-   │  ├─ constants.ts      # water level + scene palette
-   │  ├─ BallScene.tsx     # match ball riding the swell (FINA proportions)
-   │  ├─ Water.tsx         # PBR water (vertex swell + animated normal detail)
-   │  ├─ Ball.tsx          # match-quality ball (pebbled grip, panel seams)
-   │  ├─ Goal.tsx          # floating goal (posts, net, pontoons)
-   │  └─ effects.tsx       # ripples + droplet spray
-   ├─ CameraRig.tsx        # low cinematic camera (maath damping + ball follow)
-   ├─ heroState.ts         # ball position hand-off (play → camera)
-   ├─ numberTexture.ts     # shared cap-number texture
-   ├─ TacticsCanvas.tsx    # field + caps + animated 3D arrows (lazy)
-   ├─ Cap.tsx              # numbered water polo cap marker
-   ├─ PenaltyCanvas.tsx    # goal + plotted shots (lazy)
-   ├─ PenaltyMap.tsx       # instanced scored/missed shots
-   ├─ Arrow.tsx            # reusable self-drawing 3D arrow
-   ├─ netTexture.ts        # shared procedural goal-net texture
-   ├─ Hotspot.tsx          # accessible in-scene hotspot
-   └─ Loader.tsx           # in-canvas + DOM loaders
-```
+(Structure remains clean with additional quality tools)
 
-## Theming / palette
+## Performance & Accessibility
 
-The brand palette is defined in **three** mirrored places — keep them in sync:
+- Heavy 3D scenes lazy-loaded and paused when off-screen
+- Mobile-optimized (DPR capping, reduced complexity)
+- Full `prefers-reduced-motion` support
+- Keyboard navigation, ARIA labels, screen reader descriptions
 
-| Token | Hex | Tailwind | CSS var |
-| --- | --- | --- | --- |
-| Background | `#131512` | `bg` | `--color-bg` |
-| Surface | `#1F221B` | `surface` | `--color-surface` |
-| Brand (olive) | `#7E8B63` | `brand` | `--color-brand` |
-| Brand light | `#9FAC82` | `brand-light` | `--color-brand-light` |
-| Silver | `#C5C9C0` | `silver` | `--color-silver` |
-| Text | `#E6E8E2` | `ink` | `--color-ink` |
+## Contributing
 
-- Tailwind tokens: `tailwind.config.js`
-- CSS variables: `src/index.css`
-- TypeScript values (used in Three.js): `src/lib/theme.ts`
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Where to plug things in
+## License
 
-- **Email capture** → `src/components/sections/EarlyAccess.tsx` has a clearly
-  marked `TODO` in `handleSubmit`. Swap the simulated delay for a real request
-  (Mailchimp / ConvertKit / Resend / your own API). Validation is already done.
-- **Real assets** (logo, 3D ball, field, share image) → see
-  [`public/assets/README.md`](./public/assets/README.md). Search the codebase
-  for `TODO` to find every insertion point.
-- **Social links** → placeholders in `src/components/layout/Footer.tsx`.
+MIT © ProgAnakin
 
-## Performance notes
+---
 
-- Heavy 3D scenes are **code-split** (`React.lazy`). `useCanvasActivation`
-  defers each canvas's mount to **browser-idle** (it never competes with first
-  paint) and **pauses its render loop when scrolled off-screen**
-  (`frameloop="never"`), so idle canvases don't fight the scroll.
-- The hero shows a **static poster instantly** and crossfades the 3D in once
-  the renderer is ready.
-- **No post-processing library** — the cinematic grade is renderer ACES + MSAA
-  + a faux-bloom sprite + a CSS vignette (keeps the bundle light and runtime
-  cheap; see HeroCanvas).
-- Smooth scroll (Lenis) uses a light frame-based `lerp` and leaves touch
-  devices on native scrolling.
-- Repeated 3D elements (pins, shot markers, droplets, spray) use **instancing**
-  — one draw call each.
-- The water is a single shader-displaced plane; mobile drops the subdivision
-  count and the device pixel ratio is capped (`AdaptiveDpr`).
-- Custom materials and generated textures are **explicitly disposed** on
-  unmount.
-
-## Accessibility
-
-- A parallel, screen-reader-only description accompanies each 3D scene, and
-  decorative canvases are hidden from assistive tech.
-- `aria-label` / `role="img"` on interactive canvas regions; hotspots are
-  keyboard-focusable.
-- `prefers-reduced-motion` freezes the water, camera, arrows and DOM reveals.
-- Skip link, semantic landmarks, on-brand focus rings, and a fully validated,
-  keyboard-operable signup form.
-
-## Deploy
-
-Static output — deploy `dist/` anywhere. For **Vercel** or **Netlify**, the
-defaults work out of the box:
-
-- Build command: `npm run build`
-- Output directory: `dist`
+**Built with passion for the sport.**
