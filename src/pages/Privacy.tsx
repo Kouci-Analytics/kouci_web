@@ -9,7 +9,7 @@ import { SITE_NAME, LEGAL_ENTITY, CONTACT_EMAIL } from '../lib/site'
  */
 export function Privacy() {
   return (
-    <main id="main" className="container-content pb-24 pt-32 md:pt-40">
+    <main id="main" className="container-content pb-24 pt-24 md:pt-40">
       <Seo
         title={`Privacy Policy | ${SITE_NAME}`}
         description="How Kouci collects, uses, and protects the personal data you share through this site."

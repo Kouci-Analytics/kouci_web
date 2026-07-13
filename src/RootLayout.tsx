@@ -1,7 +1,7 @@
 import { LazyMotion, domAnimation } from 'motion/react'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
-import { Navbar } from './components/layout/Navbar'
+import { Sidebar } from './components/layout/Sidebar'
 import { Footer } from './components/layout/Footer'
 import { ScrollProgress } from './components/ui/ScrollProgress'
 import { ScrollToHash } from './components/ScrollToHash'
@@ -10,7 +10,7 @@ import { useSmoothScroll } from './hooks/useSmoothScroll'
 
 /**
  * Persistent shell shared by every route: smooth scroll, progress bar, skip
- * link, navbar, the animated page outlet, and the footer. All scroll/Lenis
+ * link, section sidebar, the animated page outlet, and the footer. All scroll/Lenis
  * logic runs in effects, so this renders cleanly during static generation too.
  *
  * A single LazyMotion (with the lightweight `domAnimation` feature set, `strict`
@@ -33,11 +33,12 @@ export function RootLayout() {
       </a>
 
       <ScrollToHash />
-      <Navbar />
+      <Sidebar />
 
-      <PageTransition />
-
-      <Footer />
+      <div className="pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0 lg:pl-48">
+        <PageTransition />
+        <Footer />
+      </div>
       {/* Cookieless visit + performance telemetry (only active on Vercel). */}
       <Analytics />
       <SpeedInsights />

@@ -8,7 +8,11 @@ import { Reveal } from '../ui/Reveal'
  */
 export function CtaBand() {
   return (
-    <section aria-label="Get the club license" className="border-t border-white/5 py-16 md:py-20">
+    <section
+      id="license"
+      aria-label="Get the club license"
+      className="border-t border-white/5 py-16 md:py-20"
+    >
       <div className="container-content">
         <Reveal className="card relative overflow-hidden p-8 text-center md:p-12">
           {/* Soft brand glow. */}

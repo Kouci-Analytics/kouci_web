@@ -8,7 +8,7 @@ import { SITE_NAME, SITE_URL, LEGAL_ENTITY, CONTACT_EMAIL } from '../lib/site'
  */
 export function Terms() {
   return (
-    <main id="main" className="container-content pb-24 pt-32 md:pt-40">
+    <main id="main" className="container-content pb-24 pt-24 md:pt-40">
       <Seo
         title={`Terms of Use | ${SITE_NAME}`}
         description="The terms that govern the use of the Kouci website and early-access programme."

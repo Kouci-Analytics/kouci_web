@@ -36,7 +36,7 @@ export function BlogIndex() {
   ]
 
   return (
-    <main id="main" className="container-content pb-24 pt-32 md:pt-40">
+    <main id="main" className="container-content pb-24 pt-24 md:pt-40">
       <Seo
         title="Blog — Water Polo Tactics & Analysis | Kouci"
         description={DESCRIPTION}

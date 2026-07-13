@@ -85,7 +85,7 @@ export function Checkout() {
   }
 
   return (
-    <main id="main" className="container-content pb-24 pt-32 md:pt-40">
+    <main id="main" className="container-content pb-24 pt-24 md:pt-40">
       <Seo
         title={`Get the Club License | ${SITE_NAME}`}
         description={`Buy the ${LICENSE.name} (${LICENSE.version}) — one payment, your whole club, every team and coach. Secure checkout by Stripe.`}

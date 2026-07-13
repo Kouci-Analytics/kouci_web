@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, m, useReducedMotion } from 'motion/react'
 import { track } from '@vercel/analytics'
 import { ButtonTo } from '../ui/Button'
-import { Logo } from '../ui/Logo'
 
 const sections = [
   { id: 'features', label: 'Features' },
@@ -66,7 +65,13 @@ export function Navbar() {
           }`}
         >
           <Link to="/" aria-label="Kouci — home" className="rounded-full">
-            <Logo />
+            <img
+              src="/assets/logoKouci.png"
+              alt=""
+              width={40}
+              height={40}
+              className="h-10 w-10 object-contain"
+            />
           </Link>
 
           <ul className="hidden items-center gap-8 md:flex">

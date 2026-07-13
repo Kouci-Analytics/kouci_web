@@ -118,7 +118,7 @@ export function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative flex h-[100svh] min-h-[640px] w-full items-center overflow-hidden"
+      className="relative flex h-[100svh] min-h-[640px] w-full overflow-hidden pt-[64px] sm:items-center sm:pt-0"
     >
       {/* Decorative 3D water backdrop. The accessible content is the headline
           and copy below — so the canvas itself is hidden from assistive tech. */}
@@ -182,7 +182,7 @@ export function Hero() {
 
       {/* Scroll cue */}
       <div
-        className="absolute bottom-7 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-silver/70"
+        className="absolute bottom-[100px] left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-silver/70 md:bottom-7"
         aria-hidden="true"
       >
         <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
