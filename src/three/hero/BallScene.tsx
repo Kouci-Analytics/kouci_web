@@ -1,8 +1,8 @@
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Ball } from './Ball'
-import { Ripples, Spray, type SprayEmitter } from './effects'
+import { type SprayEmitter } from './effects'
 import { WATER_Y } from './constants'
 import { heroState } from '../heroState'
 
@@ -23,7 +23,7 @@ export const GOAL_WIDTH = BALL_SPEC.goalWidth * SCALE
 export const GOAL_HEIGHT = BALL_SPEC.goalHeight * SCALE
 
 // A ball floats about a third submerged.
-const RIDE = BALL_RADIUS * 0.62
+const RIDE = BALL_RADIUS * 0.5
 
 interface BallSceneProps {
   /** Where the ball floats (x, z on the water). */
@@ -40,7 +40,7 @@ export function BallScene({ position, reducedMotion = false }: BallSceneProps) {
   const [x, z] = position
   const ball = useRef<THREE.Group>(null)
   const spray = useRef<SprayEmitter>({ pos: new THREE.Vector3(x, WATER_Y + RIDE, z), rate: 0 })
-  const center = useMemo(() => new THREE.Vector3(x, WATER_Y, z), [x, z])
+  // const center = useMemo(() => new THREE.Vector3(x, WATER_Y, z), [x, z])
 
   useFrame((state, delta) => {
     const t = state.clock.elapsedTime
@@ -66,8 +66,8 @@ export function BallScene({ position, reducedMotion = false }: BallSceneProps) {
   return (
     <group>
       <Ball ref={ball} radius={BALL_RADIUS} />
-      <Ripples center={center} reducedMotion={reducedMotion} scale={0.75} />
-      <Spray emitter={spray} reducedMotion={reducedMotion} />
+      {/* <Ripples center={center} reducedMotion={reducedMotion} scale={0.75} /> */}
+      {/* <Spray emitter={spray} reducedMotion={reducedMotion} /> */}
     </group>
   )
 }

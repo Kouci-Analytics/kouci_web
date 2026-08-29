@@ -1,14 +1,18 @@
 import { Hero } from '../components/sections/Hero'
-import { PromiseSection } from '../components/sections/Promise'
+import { Pain } from '../components/sections/Pain'
 import { Features } from '../components/sections/Features'
+import { Pricing } from '../components/sections/Pricing'
 import { Showcase } from '../components/sections/Showcase'
 import { Audience } from '../components/sections/Audience'
+import { CtaBand } from '../components/sections/CtaBand'
+import { Faq, FAQ_ITEMS } from '../components/sections/Faq'
 import { EarlyAccess } from '../components/sections/EarlyAccess'
 // Reviews section is intentionally not rendered until real, attributable
 // testimonials exist (see src/components/sections/Reviews.tsx). Re-add <Reviews />
 // below <Audience /> once the placeholder quotes are replaced.
 import { Seo } from '../components/Seo'
 import { SITE_URL, SITE_NAME, SOCIAL_LINKS, absoluteUrl } from '../lib/site'
+import { LICENSE } from '../lib/commerce'
 import { usePageScroll } from '../hooks/usePageScroll'
 
 const DESCRIPTION =
@@ -20,14 +24,15 @@ const structuredData = [
     '@type': 'SoftwareApplication',
     name: SITE_NAME,
     applicationCategory: 'SportsApplication',
-    operatingSystem: 'Web',
+    operatingSystem: 'iOS, Android',
     url: SITE_URL,
     description: DESCRIPTION,
     offers: {
       '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-      description: 'Early access',
+      price: String(LICENSE.price),
+      priceCurrency: LICENSE.currency,
+      description: `${LICENSE.name} (${LICENSE.version}) — one-time payment per club`,
+      url: absoluteUrl('/checkout'),
     },
   },
   {
@@ -35,7 +40,7 @@ const structuredData = [
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl('/og-image.png'),
+    logo: absoluteUrl('/og-image.jpg'),
     description: 'Water polo tactical and statistical analysis for coaches and analysts.',
     sameAs: SOCIAL_LINKS,
   },
@@ -44,6 +49,15 @@ const structuredData = [
     '@type': 'WebSite',
     name: SITE_NAME,
     url: SITE_URL,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
   },
 ]
 
@@ -65,10 +79,13 @@ export function LandingPage() {
       />
       <main id="main">
         <Hero />
-        <PromiseSection />
+        <Pain />
         <Features />
         <Showcase />
+        <CtaBand />
         <Audience />
+        <Pricing />
+        <Faq />
         <EarlyAccess />
       </main>
     </>

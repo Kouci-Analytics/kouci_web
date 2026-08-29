@@ -36,7 +36,7 @@ export function BlogIndex() {
   ]
 
   return (
-    <main id="main" className="container-content pb-24 pt-32 md:pt-40">
+    <main id="main" className="container-content pb-24 pt-24 md:pt-40">
       <Seo
         title="Blog — Water Polo Tactics & Analysis | Kouci"
         description={DESCRIPTION}
@@ -58,10 +58,10 @@ export function BlogIndex() {
       ) : (
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           {posts.map((post, i) => (
-            <Reveal key={post.slug} delay={i * 0.05} from="up">
+            <Reveal key={post.slug} delay={i * 0.05} pop>
               <Link
                 to={`/blog/${post.slug}`}
-                className="card group flex h-full flex-col overflow-hidden"
+                className="card card-lift group flex h-full flex-col overflow-hidden"
               >
                 {post.cover && (
                   <div className="aspect-[16/9] w-full overflow-hidden">

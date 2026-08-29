@@ -1,5 +1,5 @@
 import { Seo } from '../components/Seo'
-import { SITE_NAME } from '../lib/site'
+import { SITE_NAME, LEGAL_ENTITY, CONTACT_EMAIL } from '../lib/site'
 
 /**
  * Privacy policy for the site's data collection (the early-access form + basic
@@ -9,7 +9,7 @@ import { SITE_NAME } from '../lib/site'
  */
 export function Privacy() {
   return (
-    <main id="main" className="container-content pb-24 pt-32 md:pt-40">
+    <main id="main" className="container-content pb-24 pt-24 md:pt-40">
       <Seo
         title={`Privacy Policy | ${SITE_NAME}`}
         description="How Kouci collects, uses, and protects the personal data you share through this site."
@@ -27,16 +27,17 @@ export function Privacy() {
 
         <h2>1. Who is responsible</h2>
         <p>
-          The controller of your data is <strong>[YOUR LEGAL ENTITY / NAME]</strong>, based in
-          Portugal (EU). For any privacy question or request, contact{' '}
-          <strong>[YOUR CONTACT EMAIL]</strong>.
+          The controller of your data is <strong>{LEGAL_ENTITY}</strong>, based in Portugal (EU).
+          For any privacy question or request, contact <strong>{CONTACT_EMAIL}</strong>.
         </p>
 
         <h2>2. What we collect</h2>
         <ul>
           <li>
-            <strong>Early-access form:</strong> the <strong>name</strong> and{' '}
-            <strong>email address</strong> you submit.
+            <strong>Early-access form:</strong> the <strong>name</strong>,{' '}
+            <strong>email address</strong>, <strong>club/team</strong> and <strong>role</strong> you
+            submit — plus, optionally, your <strong>country</strong> and whether you’d like a guided
+            demo.
           </li>
           <li>
             <strong>Basic analytics:</strong> aggregated, anonymous usage statistics (page views,
@@ -91,7 +92,7 @@ export function Privacy() {
           </li>
         </ul>
         <p>
-          To exercise any of these, email <strong>[YOUR CONTACT EMAIL]</strong> and we will respond
+          To exercise any of these, email <strong>{CONTACT_EMAIL}</strong> and we will respond
           within 30 days.
         </p>
 
