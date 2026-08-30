@@ -1,4 +1,4 @@
-# Kouci — https://kouci-web.vercel.app
+# Kouci — https://www.kouci.app
 # Search engines and AI/answer-engine crawlers are welcome.
 
 User-agent: *
@@ -38,4 +38,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://kouci-web.vercel.app/sitemap.xml
+Sitemap: https://www.kouci.app/sitemap.xml
