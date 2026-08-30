@@ -1,12 +1,39 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { Seo } from '../components/Seo'
 import { Button } from '../components/ui/Button'
 import { Field } from '../components/ui/Field'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const WISHLIST_ENDPOINT = import.meta.env.VITE_WISHLIST_ENDPOINT
 
 type Errors = { name?: string; email?: string }
+type Status = 'idle' | 'submitting' | 'success' | 'error'
+
+async function fetchWishlistCount(signal?: AbortSignal) {
+  if (!WISHLIST_ENDPOINT) throw new Error('Missing VITE_WISHLIST_ENDPOINT')
+
+  const response = await fetch(WISHLIST_ENDPOINT, {
+    headers: { Accept: 'application/json' },
+    signal,
+  })
+
+  if (!response.ok) throw new Error('Wishlist count request failed')
+
+  const data: unknown = await response.json()
+  if (
+    typeof data !== 'object' ||
+    data === null ||
+    !('count' in data) ||
+    typeof data.count !== 'number' ||
+    !Number.isInteger(data.count) ||
+    data.count < 0
+  ) {
+    throw new Error('Invalid wishlist count response')
+  }
+
+  return data.count
+}
 
 function LockIcon({ className = 'h-4 w-4' }: { className?: string }) {
   return (
@@ -48,9 +75,31 @@ export function Wishlist() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState<Errors>({})
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<Status>('idle')
+  const [wishlistCount, setWishlistCount] = useState<number | null>(null)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const controller = new AbortController()
+
+    async function refreshCount() {
+      try {
+        const count = await fetchWishlistCount(controller.signal)
+        setWishlistCount(count)
+      } catch {
+        // The form remains usable if the optional social-proof count is unavailable.
+      }
+    }
+
+    void refreshCount()
+    const interval = window.setInterval(refreshCount, 30_000)
+
+    return () => {
+      controller.abort()
+      window.clearInterval(interval)
+    }
+  }, [])
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const nextErrors: Errors = {}
@@ -60,9 +109,30 @@ export function Wishlist() {
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
 
-    // Front-end prototype only. Replace this state change with the wishlist API
-    // request when persistence is introduced.
-    setSubmitted(true)
+    setStatus('submitting')
+
+    try {
+      if (!WISHLIST_ENDPOINT) throw new Error('Missing VITE_WISHLIST_ENDPOINT')
+      const response = await fetch(WISHLIST_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          name: name.trim(),
+        }),
+      })
+
+      if (!response.ok) throw new Error('Wishlist request failed')
+      setStatus('success')
+      void fetchWishlistCount()
+        .then(setWishlistCount)
+        .catch(() => undefined)
+    } catch {
+      setStatus('error')
+    }
   }
 
   const firstName = name.trim().split(/\s+/)[0]
@@ -110,6 +180,24 @@ export function Wishlist() {
                 play. The app is private for now, but you can be first in line to see it.
               </p>
 
+              {wishlistCount !== null && (
+                <div
+                  aria-live="polite"
+                  className="mt-8 inline-flex items-center gap-3 text-sm text-silver"
+                >
+                  <span className="relative flex h-3 w-3" aria-hidden="true">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-light opacity-50" />
+                    <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-light" />
+                  </span>
+                  <span>
+                    <span className="font-semibold tabular-nums text-ink">
+                      {wishlistCount.toLocaleString()}
+                    </span>{' '}
+                    Wishlists submitted
+                  </span>
+                </div>
+              )}
+
               <div className="mt-10 grid max-w-lg grid-cols-3 gap-3" aria-label="Product status">
                 {[
                   ['01', 'Build'],
@@ -140,7 +228,7 @@ export function Wishlist() {
                 className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-light/70 to-transparent"
               />
 
-              {submitted ? (
+              {status === 'success' ? (
                 <div
                   role="status"
                   className="flex min-h-[25rem] flex-col items-center justify-center text-center"
@@ -168,7 +256,7 @@ export function Wishlist() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => setSubmitted(false)}
+                    onClick={() => setStatus('idle')}
                     className="mt-8 text-xs text-silver/60 underline decoration-white/20 underline-offset-4 transition-colors hover:text-ink"
                   >
                     Use a different email
@@ -188,6 +276,14 @@ export function Wishlist() {
                   </p>
 
                   <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-5">
+                    {status === 'error' && (
+                      <div
+                        role="alert"
+                        className="rounded-xl border border-red-400/40 bg-red-400/10 px-4 py-3 text-center text-sm text-red-200"
+                      >
+                        Something went wrong. Please try again.
+                      </div>
+                    )}
                     <Field
                       id="wishlist-name"
                       name="name"
@@ -221,8 +317,13 @@ export function Wishlist() {
                       </p>
                     </div>
 
-                    <Button type="submit" className="w-full" withArrow>
-                      Join the wishlist
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      withArrow={status !== 'submitting'}
+                      disabled={status === 'submitting'}
+                    >
+                      {status === 'submitting' ? 'Joining…' : 'Join the wishlist'}
                     </Button>
                   </form>
 
