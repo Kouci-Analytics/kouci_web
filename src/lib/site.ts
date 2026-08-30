@@ -14,8 +14,8 @@ export const DEFAULT_OG_IMAGE = '/og-image.jpg'
  * launch — until then the live pages display the placeholders below, which is a
  * trust/compliance gap. This is the only place to edit them.
  */
-export const LEGAL_ENTITY = '[Your legal entity / name]'
-export const CONTACT_EMAIL = '[your contact email]'
+export const LEGAL_ENTITY = 'Kouci'
+export const CONTACT_EMAIL = 'kouci.management@gmail.com'
 
 /** The social profiles, surfaced to search/AI via Organization structured data. */
 export const SOCIAL_LINKS = [
