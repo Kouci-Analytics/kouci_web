@@ -3,9 +3,9 @@
  * data and llms.txt. Single source of truth: set `VITE_SITE_URL` when the real
  * domain lands (locally in .env, and in the Vercel project env) and everything —
  * client + the build-time sitemap/llms.txt generator — picks it up. Falls back
- * to the current Vercel URL.
+ * to the production domain.
  */
-export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://kouci-web.vercel.app'
+export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://www.kouci.app'
 export const SITE_NAME = 'Kouci'
 export const DEFAULT_OG_IMAGE = '/og-image.jpg'
 

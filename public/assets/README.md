@@ -6,7 +6,7 @@ Drop real production assets here and wire them up where the TODOs point.
 
 | Asset | Suggested file | Used by | Notes |
 | --- | --- | --- | --- |
-| Logo / wordmark | `logo.svg` | `src/components/layout/Navbar.tsx`, `Footer.tsx`, `public/favicon.svg` | Replace the placeholder "K" badge. |
+| Logo / wordmark | `logoKouci.png` | Page favicon | Official Kouci logo. |
 | Water polo ball | `ball.glb` | `src/three/WaterPoloBall.tsx` | Export from Blender as **GLB + Draco**. Load with drei's `useGLTF` (wrap in `<Suspense>`). |
 | Tactics field model | `field.glb` | `src/three/TacticsField.tsx` | Optional — the field is currently procedural. |
 | Social share image | `og.jpg` (1200×630) | `index.html` (`og:image`) | For link previews. |

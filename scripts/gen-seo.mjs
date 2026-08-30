@@ -9,7 +9,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const SITE_URL = process.env.VITE_SITE_URL || 'https://kouci-web.vercel.app'
+const SITE_URL = process.env.VITE_SITE_URL || 'https://www.kouci.app'
 const BLOG_DIR = join(root, 'src/content/blog')
 
 function field(raw, name) {

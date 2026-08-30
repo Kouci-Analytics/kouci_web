@@ -6,7 +6,7 @@
 
 Player stats · Penalty shot maps · Animated tactics · Live match tracking
 
-[**Live site**](https://kouci-web.vercel.app) · [Request early access](https://kouci-web.vercel.app/#early-access) · [Blog](https://kouci-web.vercel.app/blog)
+[**Live site**](https://www.kouci.app/) · [Request early access](https://www.kouci.app/#early-access) · [Blog](https://www.kouci.app/blog)
 
 [![CI](https://github.com/ProgAnakin/kouci_web/actions/workflows/ci.yml/badge.svg)](https://github.com/ProgAnakin/kouci_web/actions/workflows/ci.yml)
 
@@ -127,8 +127,8 @@ The brand palette is defined in **three** mirrored places — keep them in sync:
   `early_access_signup` conversion event fired on a successful signup.
 - **Social links** → live Kouci profiles in `src/components/layout/Footer.tsx`
   (toggle each with its `enabled` flag).
-- **Canonical domain** → update `SITE_URL` in `src/lib/site.ts` (and the same
-  value in `scripts/gen-seo.mjs`) when the custom domain lands.
+- **Canonical domain** → production defaults to `https://www.kouci.app`; override
+  it with `VITE_SITE_URL` for preview or alternate deployments.
 
 ## Performance notes
 

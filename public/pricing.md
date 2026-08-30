@@ -12,6 +12,6 @@
   for optional add-ons.
 - White-label club app (your crest + colors): coming soon, free for license
   holders.
-- Buy: https://kouci-web.vercel.app/checkout (secure checkout by Stripe; invoice + tax ID
+- Buy: https://www.kouci.app/checkout (secure checkout by Stripe; invoice + tax ID
   collected at checkout)
-- Guided demo before buying: https://kouci-web.vercel.app/#early-access
+- Guided demo before buying: https://www.kouci.app/#early-access
