@@ -5,10 +5,7 @@ import { Button } from '../components/ui/Button'
 import { Field } from '../components/ui/Field'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const WISHLIST_ENDPOINT =
-  import.meta.env.ENV === 'production'
-    ? 'https://api.kouci.app/wishlist'
-    : 'http://localhost:3000/wishlist'
+const WISHLIST_ENDPOINT = 'https://api.kouci.app/wishlist'
 
 type Errors = { name?: string; email?: string }
 type Status = 'idle' | 'submitting' | 'success' | 'error'
